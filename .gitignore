@@ -1,11 +1,20 @@
-<<<<<<< HEAD
 .venv/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
-=======
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+output/
+models/
+.DS_Store
+*.log
+catboost_info/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -159,19 +168,11 @@ activemq-data/
 .env
 .envrc
 .venv
->>>>>>> 469a6886722fac4c4bda725be5b27f571c703855
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
-<<<<<<< HEAD
-output/
-models/
-.DS_Store
-*.log
-catboost_info/
-=======
 
 # Spyder project settings
 .spyderproject
@@ -232,4 +233,3 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
->>>>>>> 469a6886722fac4c4bda725be5b27f571c703855
