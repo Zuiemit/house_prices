@@ -116,7 +116,6 @@ dnn_params = {
     'patience':      20,               # early stopping
     'scheduler':     'cosine',         # 'cosine' | 'step' | None
     'optimizer':     'AdamW',          # 'Adam' | 'AdamW' | 'SGD' | 'RMSprop'
-    'task':          'regression',
     'device':        'cpu',            # автоматически 'cuda' если доступен GPU
 }
 ```
