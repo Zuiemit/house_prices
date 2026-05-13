@@ -6,7 +6,10 @@ from config import Config
 
 
 class Dataset:
-
+    """Пайплайн предобработки данных для House Prices.
+    Все правила (медианы, моды, редкие категории) вычисляются
+    только по train и применяются к test — без утечки данных.
+    """
     def __init__(self, config: Config) -> None:
         self.config = config
         self.data_checkpoint = {}

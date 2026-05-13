@@ -52,6 +52,11 @@ class Solver:
         return np.mean(list(self._get_all_probas(X).values()), axis=0)
 
     def predict_weighted(self, X: pd.DataFrame) -> np.ndarray:
+        """Возвращает взвешенное среднее предсказаний.
+
+        Вес каждой модели обратно пропорционален её rmse_log —
+        лучшие модели получают больший вес.
+        """
         all_preds = self._get_all_probas(X)
 
         errors = {name: self.results[name]['rmse_log'] for name in all_preds}
@@ -64,6 +69,12 @@ class Solver:
         return sum(all_preds[name] * weights[name] for name in all_preds)
 
     def fit_stacking(self, X: pd.DataFrame, y: pd.Series) -> None:
+        """Обучает мета-модель (Ridge) на OOF предсказаниях базовых моделей.
+
+        OOF предсказания честные — каждая строка предсказана моделью
+        которая её не видела при обучении, утечки данных нет.
+        Оценивает мета-модель через CV и печатает rmse_log.
+        """
         assert len(self.results) > 0, 'Сначала вызови fit()'
 
         stacking_features = pd.DataFrame({
@@ -91,6 +102,7 @@ class Solver:
         self.meta_model = meta
 
     def predict_stacking(self, X: pd.DataFrame) -> np.ndarray:
+        """Возвращает предсказания стекинга через обученную мета-модель."""
         assert self.meta_model is not None, 'Сначала вызови fit_stacking()'
 
         test_features = pd.DataFrame(
@@ -100,6 +112,10 @@ class Solver:
         return self.meta_model.predict(test_features)
 
     def fit_ensemble(self, X: pd.DataFrame, y: pd.Series) -> None:
+        """Обучает ансамбль согласно config.ensemble_mode.
+
+        При mode='all' обучает стекинг и сравнивает все три метода.
+        """
         if self.config.ensemble_mode in ('stacking', 'all'):
             self.fit_stacking(X, y)
 
